@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=${DB_NAME:-tender_company}
+      - POSTGRES_USER=${DB_USER:-tender}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-tender}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    env_file:
+      - ./src/.env
+    environment:
+      - PINECONE_INDEX=${PINECONE_INDEX:-port}
+      - PINECONE_NAMESPACE=${PINECONE_NAMESPACE:-tenders}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-5.2-2025-12-11}
+      - OPENAI_EMBED_MODEL=${OPENAI_EMBED_MODEL:-text-embedding-3-large}
+      - OPENAI_EMBED_DIM=${OPENAI_EMBED_DIM:-1024}
+      - DB_HOST=${DB_HOST:-db}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${DB_NAME:-tender_company}
+      - DB_USER=${DB_USER:-tender}
+      - DB_PASSWORD=${DB_PASSWORD:-tender}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  web:
+    build:
+      context: ./web
+    environment:
+      - NEXT_PUBLIC_API_BASE=http://api:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+volumes:
+  db_data:

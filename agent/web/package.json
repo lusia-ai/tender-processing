@@ -1,0 +1,26 @@
+{
+  "name": "tender-rag-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.2.15",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-markdown": "9.0.1",
+    "remark-gfm": "4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "@types/react": "18.3.18",
+    "@types/react-dom": "18.3.5",
+    "eslint": "8.57.1",
+    "eslint-config-next": "14.2.15",
+    "typescript": "5.6.3"
+  }
+}

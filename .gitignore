@@ -7,6 +7,9 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+data/tenders/processed/
+ted_421_POL_f02_like/
+.vscode/
 .Python
 build/
 develop-eggs/
@@ -229,6 +232,7 @@ pnpm-debug.log*
 # App data / downloads
 portfolio/src/data/tenders/
 portfolio/ted_downloader/**/*.pdf
+agent/src/data/tenders/processed/
 
 # Logs
 logs/
