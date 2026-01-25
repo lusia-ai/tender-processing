@@ -1,15 +1,20 @@
 # Tender Intelligence Console
 
-A production‑style **tender QA + bid/no‑bid copilot** for European procurement PDFs.
+A production-style **tender QA + bid/no-bid copilot** for European procurement PDFs.
 
 Built for an anonymized industrial client (codename **Aurora Works**) who wanted faster, evidence‑based tender reviews without losing traceability.
+
+## Demo
+
+[Watch the demo](media/DEMO%20AIN%20SCARED.mp4)
 
 ## What it does
 
 - **Ingest tender PDFs** (drag & drop into chat or batch import)
-- **Search your tender corpus** via RAG (Pinecone) and answer with **traceable citations** (`file#page`)
-- **Find similar tenders** to reuse prior knowledge and spot patterns
-- **Assess readiness** (“can we qualify / deliver?”) using tender requirements + your **company profile & delivery history** (Postgres)
+- **Parse tenders into sections** (buyer, scope, lots, deadlines, requirements, submissions) with collapsible UI
+- **Assess readiness** (can we qualify/deliver) using tender requirements plus your **company profile, compliance, and delivery history** (Postgres)
+- **Find similar tenders** with evidence-backed matches and snippets
+- **Answer with traceable citations** (`file#page`) for every factual claim
 
 ## Why it matters
 
@@ -18,10 +23,10 @@ This console turns a tender into a **decision‑ready brief** with explicit evid
 
 ## Highlights (portfolio‑worthy)
 
-- **LangGraph tool‑calling agent**: the model decides which tools to call (retrieval, PDF read, similarity, DB lookups) before answering
-- **Evidence‑first answers**: every factual claim is grounded in retrieved excerpts with citations
-- **LLM‑assisted semantic chunking** for higher retrieval precision on long documents
-- **Server‑side chat memory** (threaded sessions) + retrieval controls (depth, source filter)
+- **LangGraph tool-calling agent**: model routes to the right tool (breakdown, readiness, similarity, chat history)
+- **Evidence-first answers**: every factual claim is grounded in retrieved excerpts with citations
+- **Semantic chunking** + query rewrite for higher retrieval precision on long documents
+- **Server-side chat memory** (threaded sessions) + retrieval controls (depth, source filter)
 - **Full product surface**: API + web UI + ingestion pipeline + DB seed + Docker Compose
 
 ## Tech stack
@@ -62,10 +67,10 @@ docker compose up --build
 2) Chunk + embed + upsert to Pinecone (CLI)
 3) Ask questions like:
 
-- “Summarize scope, timeline, and key requirements.”
+- “Break down the tender by scope, deadlines, requirements, and submission details.”
 - “What are the qualification thresholds and what evidence do we need?”
 - “Find similar tenders and explain the match.”
-- “Can we qualify? Give a decision‑ready assessment with gaps and next steps.”
+- “Can we qualify? Give a decision-ready assessment with gaps and next steps.”
 
 ## Architecture (high level)
 

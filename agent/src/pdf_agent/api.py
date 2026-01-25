@@ -43,6 +43,15 @@ class SourceOut(BaseModel):
     page: Optional[int]
 
 
+class ToolOutput(BaseModel):
+    kind: str
+    format: Optional[str] = None
+    note: Optional[str] = None
+    content: Optional[str] = None
+    confidence: Optional[int] = None
+    data: Optional[Dict[str, Any]] = None
+
+
 class AnswerOut(BaseModel):
     answer: str
     sources: list[SourceOut]
@@ -59,6 +68,7 @@ class ChatResponse(BaseModel):
     thread_id: str
     answer: str
     sources: list[SourceOut]
+    tool_outputs: list[ToolOutput] = []
 
 
 @app.on_event("startup")
@@ -173,7 +183,27 @@ def chat(payload: ChatPayload) -> ChatResponse:
                 page=src.get("page"),
             )
         )
-    return ChatResponse(thread_id=thread_id, answer=result.get("answer", ""), sources=sources_out)
+
+    tool_outputs = [
+        ToolOutput(
+            kind=item.get("kind", ""),
+            format=item.get("format"),
+            note=item.get("note"),
+            content=item.get("content"),
+            confidence=item.get("confidence"),
+            data=item.get("data"),
+        )
+        for item in result.get("tool_outputs", [])
+        if isinstance(item, dict) and item.get("kind")
+    ]
+
+    return ChatResponse(
+        thread_id=thread_id,
+        answer=result.get("answer", ""),
+        sources=sources_out,
+        tool_outputs=tool_outputs,
+    )
+
 
 
 @app.post("/chat-file", response_model=ChatResponse)
@@ -238,4 +268,24 @@ async def chat_file(
                 page=src.get("page"),
             )
         )
-    return ChatResponse(thread_id=effective_thread_id, answer=result.get("answer", ""), sources=sources_out)
+
+    tool_outputs = [
+        ToolOutput(
+            kind=item.get("kind", ""),
+            format=item.get("format"),
+            note=item.get("note"),
+            content=item.get("content"),
+            confidence=item.get("confidence"),
+            data=item.get("data"),
+        )
+        for item in result.get("tool_outputs", [])
+        if isinstance(item, dict) and item.get("kind")
+    ]
+
+    return ChatResponse(
+        thread_id=effective_thread_id,
+        answer=result.get("answer", ""),
+        sources=sources_out,
+        tool_outputs=tool_outputs,
+    )
+

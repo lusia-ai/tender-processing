@@ -13,7 +13,7 @@ INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALU
 INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALUES (E'ted_43628-2018_EN', E'ted_43628-2018_EN.pdf', E'Dostawa, instalacja i uruchomienie powiatowego systemu ostrzegania i alarmowania ludności na terenie powiatu kartuskiego. Lot No: 1', NULL, E'Seeded from tender metadata only (no PDF content stored).');
 INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALUES (E'ted_52967-2018_EN', E'ted_52967-2018_EN.pdf', E'Dostawa wirówki laboratoryjnej wraz z wyposażeniem dla Wydziału Chemii Lot No: 1', NULL, E'Seeded from tender metadata only (no PDF content stored).');
 INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALUES (E'ted_5789-2018_EN', E'ted_5789-2018_EN.pdf', E'Zadanie nr 1 - Reduktor napędu Lot No: 1', NULL, E'Seeded from tender metadata only (no PDF content stored).');
-INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALUES (E'ted_5791-2018_EN', E'ted_5791-2018_EN.pdf', NULL, NULL, E'Seeded from tender metadata only (no PDF content stored).');
+INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALUES (E'ted_5791-2018_EN', E'ted_5791-2018_EN.pdf', E'Dostawa przegrzewaczy pary kotłów OP 230 nr K7 i nr K9 w PGE Energia Ciepła S.A. Oddział Wybrzeże w Gdańsku', E'Supply of stage II/III steam superheaters and outlet chambers for OP230 boilers K7/K9 (PGE Energia Ciepła S.A.). No lots; delivery window 20/03/2018–01/06/2018.', E'Seeded with limited PDF summary for readiness demo.');
 INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALUES (E'ted_5835-2018_EN', E'ted_5835-2018_EN.pdf', NULL, NULL, E'Seeded from tender metadata only (no PDF content stored).');
 INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALUES (E'ted_58389-2018_EN', E'ted_58389-2018_EN.pdf', E'Dostawa i montaż kolektorów słonecznych na terenie Gminy Jastrzębia Lot No: 1', NULL, E'Seeded from tender metadata only (no PDF content stored).');
 INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALUES (E'ted_60456-2018_EN', E'ted_60456-2018_EN.pdf', E'Część 1 - Części zamienne do chwytaków hydraulicznych typ PH6-8000-0 Lot No: 1', NULL, E'Seeded from tender metadata only (no PDF content stored).');
@@ -25,7 +25,25 @@ INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALU
 INSERT INTO tenders (tender_id, source_file, primary_title, summary, notes) VALUES (E'ted_812-2018_EN', E'ted_812-2018_EN.pdf', NULL, NULL, E'Seeded from tender metadata only (no PDF content stored).');
 
 -- Company delivery history (synthetic demo data)
+
+INSERT INTO company_delivery (tender_id, title, customer, delivered_at, value, currency, scope, evidence, source_notes) VALUES (NULL, E'OP230 superheater panels (Stage II/III) and outlet chambers', E'PGE Energia Ciepła S.A. (synthetic)', E'2017-10-10', 1150000, E'PLN', E'Fabrication and delivery of OP230 superheater panels and outlet chambers per customer drawings (K7/K9 class).', E'Acceptance protocol + QA dossier (synthetic)', E'Synthetic demo data; similar scope, below 2,000,000 PLN threshold.');
+INSERT INTO company_delivery (tender_id, title, customer, delivered_at, value, currency, scope, evidence, source_notes) VALUES (NULL, E'Pressure parts for steam boiler superheaters', E'Power plant operator (synthetic)', E'2016-05-15', 650000, E'PLN', E'Supply of pressure parts for steam boiler superheaters (OP230 class).', E'Reference letter (synthetic)', E'Synthetic demo data; similar scope, below 2,000,000 PLN threshold.');
+INSERT INTO company_delivery (tender_id, title, customer, delivered_at, value, currency, scope, evidence, source_notes) VALUES (NULL, E'Pressure parts for steam boiler ≥50 MW (OP230 class)', E'Power plant operator (synthetic)', E'2017-11-20', 420000, E'PLN', E'Fabrication and delivery of pressure parts for a steam boiler ≥50 MW (OP230 class).', E'Acceptance protocol + UDT dossier (synthetic)', E'Synthetic demo data; includes ≥50 MW reference.');
 INSERT INTO company_delivery (tender_id, title, customer, delivered_at, value, currency, scope, evidence, source_notes) VALUES (E'ted_5789-2018_EN', E'Gearbox assemblies for conveyor drives', E'PGG S.A. (synthetic)', E'2023-05-20', 450000, E'PLN', E'Production and delivery of industrial gearboxes for mining conveyors.', E'Reference letter (synthetic)', E'Synthetic demo data');
 INSERT INTO company_delivery (tender_id, title, customer, delivered_at, value, currency, scope, evidence, source_notes) VALUES (E'ted_5789-2018_EN', E'Motoreducers for heavy-duty handling line', E'Industrial client (synthetic)', E'2022-09-10', 320000, E'PLN', E'Batch delivery of motoreducers with custom ratios.', E'Delivery acceptance protocol (synthetic)', E'Synthetic demo data');
 INSERT INTO company_delivery (tender_id, title, customer, delivered_at, value, currency, scope, evidence, source_notes) VALUES (E'ted_812-2018_EN', E'Boiler superheater pressure parts', E'Power plant operator (synthetic)', E'2021-03-15', 680000, E'PLN', E'Fabrication of pressure parts for OP 230 boilers.', E'Contract and acceptance note (synthetic)', E'Synthetic demo data');
+
+
+-- Company compliance/financial readiness (synthetic demo data)
+INSERT INTO company_compliance (
+  profile_id, item_type, provider, limit_value, currency, valid_from, valid_to, evidence, notes, source_notes
+) SELECT profile.id, t.item_type, t.provider, t.limit_value, t.currency, t.valid_from, t.valid_to, t.evidence, t.notes, t.source_notes
+FROM (SELECT id FROM company_profile ORDER BY id ASC LIMIT 1) AS profile
+CROSS JOIN (VALUES
+  ('liability_insurance', 'PZU S.A. (synthetic)', 250000, 'PLN', DATE '2025-01-01', DATE '2026-01-01', 'OC policy #OC-2025-001 (synthetic)', 'Coverage above 100,000 PLN minimum for pressure parts tenders.', 'Synthetic demo data'),
+  ('bid_bond_facility', 'Bank Pekao S.A. (synthetic)', 150000, 'PLN', DATE '2025-02-01', DATE '2026-02-01', 'Bid bond guarantee line up to 150,000 PLN (synthetic)', 'Covers 100,000 PLN wadium requirement.', 'Synthetic demo data'),
+  ('performance_security_facility', 'Allianz Trade (synthetic)', 500000, 'PLN', DATE '2025-02-01', DATE '2026-02-01', 'Performance bond facility up to 500,000 PLN (synthetic)', 'Supports 10% performance security for mid-sized contracts.', 'Synthetic demo data'),
+  ('working_capital_line', 'mBank S.A. (synthetic)', 2000000, 'PLN', DATE '2025-01-15', DATE '2026-01-15', 'Revolving credit line for working capital (synthetic)', 'Supports long payment terms (60-120 days).', 'Synthetic demo data')
+) AS t(item_type, provider, limit_value, currency, valid_from, valid_to, evidence, notes, source_notes);
+
 COMMIT;

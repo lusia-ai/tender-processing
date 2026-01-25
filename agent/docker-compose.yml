@@ -38,8 +38,12 @@ services:
   web:
     build:
       context: ./web
+      args:
+        NEXT_PUBLIC_API_BASE: http://localhost:8000
+        NEXT_PUBLIC_DEBUG_UI: "true"
     environment:
-      - NEXT_PUBLIC_API_BASE=http://api:8000
+      - NEXT_PUBLIC_API_BASE=http://localhost:8000
+      - NEXT_PUBLIC_DEBUG_UI=true
     ports:
       - "3000:3000"
     depends_on:

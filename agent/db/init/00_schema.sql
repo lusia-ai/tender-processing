@@ -39,6 +39,21 @@ CREATE TABLE IF NOT EXISTS company_delivery (
   source_notes TEXT
 );
 
+CREATE TABLE IF NOT EXISTS company_compliance (
+  id SERIAL PRIMARY KEY,
+  profile_id INT REFERENCES company_profile(id),
+  item_type TEXT NOT NULL,
+  provider TEXT,
+  limit_value NUMERIC,
+  currency TEXT,
+  valid_from DATE,
+  valid_to DATE,
+  evidence TEXT,
+  notes TEXT,
+  source_notes TEXT
+);
+
+
 CREATE TABLE IF NOT EXISTS tender_lots (
   id SERIAL PRIMARY KEY,
   tender_id TEXT REFERENCES tenders(tender_id),
@@ -68,3 +83,7 @@ CREATE INDEX IF NOT EXISTS idx_company_delivery_tender_id ON company_delivery(te
 CREATE INDEX IF NOT EXISTS idx_company_delivery_text ON company_delivery USING gin (
   to_tsvector('simple', coalesce(title,'') || ' ' || coalesce(scope,'') || ' ' || coalesce(customer,''))
 );
+
+CREATE INDEX IF NOT EXISTS idx_company_compliance_profile_id ON company_compliance(profile_id);
+CREATE INDEX IF NOT EXISTS idx_company_compliance_item_type ON company_compliance(item_type);
+

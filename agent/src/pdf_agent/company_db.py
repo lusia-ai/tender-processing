@@ -55,6 +55,32 @@ def get_company_profile() -> Dict[str, Any]:
     return profile
 
 
+def get_company_compliance(profile_id: Optional[int] = None, limit: int = 20) -> List[Dict[str, Any]]:
+    with _connect() as conn:
+        cur = conn.cursor()
+        try:
+            if profile_id:
+                cur.execute(
+                    "SELECT profile_id, item_type, provider, limit_value, currency, "
+                    "valid_from, valid_to, evidence, notes, source_notes "
+                    "FROM company_compliance WHERE profile_id = %s "
+                    "ORDER BY id ASC LIMIT %s",
+                    (profile_id, limit),
+                )
+            else:
+                cur.execute(
+                    "SELECT profile_id, item_type, provider, limit_value, currency, "
+                    "valid_from, valid_to, evidence, notes, source_notes "
+                    "FROM company_compliance ORDER BY id ASC LIMIT %s",
+                    (limit,),
+                )
+            return cur.fetchall()
+        except UndefinedTable:
+            _LOGGER.warning("company_compliance table missing; returning empty compliance data")
+            return []
+
+
+
 def list_tenders(limit: int = 20) -> List[Dict[str, Any]]:
     with _connect() as conn:
         cur = conn.cursor()
@@ -64,6 +90,19 @@ def list_tenders(limit: int = 20) -> List[Dict[str, Any]]:
             (limit,),
         )
         return cur.fetchall()
+
+
+def get_tender_metadata(tender_id: str) -> Dict[str, Any]:
+    with _connect() as conn:
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT tender_id, source_file, primary_title, summary, notes "
+            "FROM tenders WHERE tender_id = %s LIMIT 1",
+            (tender_id,),
+        )
+        row = cur.fetchone()
+        return row or {}
+
 
 
 def get_tender_lots(tender_id: str, limit: int = 50) -> List[Dict[str, Any]]:
