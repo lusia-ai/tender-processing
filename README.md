@@ -6,7 +6,7 @@ Built for an anonymized industrial client (codename **Aurora Works**) who wanted
 
 ## Demo
 
-[Watch the demo](media/DEMO%20AIN%20SCARED.mp4)
+[![Demo](https://drive.google.com/thumbnail?id=1AteizbOkRHd12HF4UNxwLfkk7BIcL2Je&sz=w1200)](https://drive.google.com/file/d/1AteizbOkRHd12HF4UNxwLfkk7BIcL2Je/view?usp=sharing)
 
 ## What it does
 
