@@ -1,0 +1,25 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1427"/>
+      <stop offset="100%" stop-color="#0a0f1c"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2dd4bf"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" rx="32" fill="url(#bg)"/>
+  <rect x="80" y="110" width="1120" height="500" rx="28" fill="#0f172a" stroke="#1f2a44"/>
+  <rect x="80" y="110" width="1120" height="86" rx="28" fill="#111827"/>
+  <text x="120" y="165" fill="#e5e7eb" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="600">Tender Intelligence Console</text>
+  <text x="120" y="230" fill="#94a3b8" font-family="Helvetica, Arial, sans-serif" font-size="18">Evidence-based tender briefings in minutes</text>
+  <rect x="120" y="260" width="360" height="10" rx="5" fill="url(#accent)" opacity="0.8"/>
+  <rect x="120" y="300" width="1040" height="240" rx="18" fill="#0b1220" stroke="#1e293b"/>
+  <text x="150" y="350" fill="#cbd5f5" font-family="Helvetica, Arial, sans-serif" font-size="20">Company readiness summary</text>
+  <text x="150" y="390" fill="#9ca3af" font-family="Helvetica, Arial, sans-serif" font-size="16">Verdict: Medium confidence</text>
+  <text x="150" y="420" fill="#9ca3af" font-family="Helvetica, Arial, sans-serif" font-size="16">Key gaps: experience threshold, delivery plan</text>
+  <circle cx="1060" cy="505" r="44" fill="#0ea5a4"/>
+  <polygon points="1048,488 1048,522 1084,505" fill="#0b1220"/>
+  <text x="120" y="570" fill="#64748b" font-family="Helvetica, Arial, sans-serif" font-size="16">Click to watch the 90s demo</text>
+</svg>
