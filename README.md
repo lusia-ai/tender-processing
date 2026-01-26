@@ -6,15 +6,7 @@ Built for an anonymized industrial client (codename **Aurora Works**) who wanted
 
 ## Demo
 
-<iframe
-  width="100%"
-  height="480"
-  src="https://www.youtube.com/embed/E6i5fiUuTtA"
-  title="Tender Intelligence Console Demo"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  allowfullscreen
-></iframe>
+[![Demo](media/preview.png)](https://www.youtube.com/watch?v=E6i5fiUuTtA)
 
 ## What it does
 
