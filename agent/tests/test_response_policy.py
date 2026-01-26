@@ -1,9 +1,9 @@
 import sys
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
+sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from pdf_agent.response_policy import ActionType, ResponsePolicyConfig, evaluate_policy
+from pdf_agent.core.response_policy import ActionType, ResponsePolicyConfig, evaluate_policy
 
 
 def test_answer_plus_followup_for_clear_short_query():
@@ -56,7 +56,7 @@ def test_summary_then_ask_format_for_long_answer():
 def test_answer_only_when_user_closes():
     config = ResponsePolicyConfig()
     decision = evaluate_policy(
-        user_message="Спасибо, все",
+        user_message="Thanks, that's all",
         history=[],
         confidence=0.9,
         estimated_answer_length=200,

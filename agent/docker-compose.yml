@@ -18,13 +18,13 @@ services:
       context: .
       dockerfile: Dockerfile.api
     env_file:
-      - ./src/.env
+      - ./.env
     environment:
       - PINECONE_INDEX=${PINECONE_INDEX:-port}
       - PINECONE_NAMESPACE=${PINECONE_NAMESPACE:-tenders}
-      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-5.2-2025-12-11}
-      - OPENAI_EMBED_MODEL=${OPENAI_EMBED_MODEL:-text-embedding-3-large}
-      - OPENAI_EMBED_DIM=${OPENAI_EMBED_DIM:-1024}
+      - OPENAI_MODEL=${OPENAI_MODEL}
+      - OPENAI_EMBED_MODEL=${OPENAI_EMBED_MODEL}
+      - OPENAI_EMBED_DIM=${OPENAI_EMBED_DIM}
       - DB_HOST=${DB_HOST:-db}
       - DB_PORT=${DB_PORT:-5432}
       - DB_NAME=${DB_NAME:-tender_company}

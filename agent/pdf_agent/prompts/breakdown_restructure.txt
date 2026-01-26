@@ -1,0 +1,7 @@
+Rewrite the tender breakdown into JSON.
+Return ONLY valid JSON matching the schema.
+sections must be an object mapping section title to section content.
+Use EXACTLY these section titles in this order as keys: {{titles_line}}.
+Do not include markdown.
+Schema:
+{{schema}}

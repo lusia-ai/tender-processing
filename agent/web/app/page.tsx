@@ -72,30 +72,20 @@ const readinessMeta: Record<ReadinessLevel, ReadinessMeta> = {
   low: { label: "Low", percent: 35, tone: "negative" },
   uncertain: { label: "Uncertain", percent: 50, tone: "neutral" },
   unknown: { label: "Unknown", percent: 50, tone: "neutral" },
-
 };
-
-const readinessLabelsRu: Record<ReadinessLevel, string> = {
-  high: "Высокая",
-  medium: "Средняя",
-  low: "Низкая",
-  uncertain: "Неопределенная",
-  unknown: "Неизвестная",
-};
-
 
 const headingMap = {
-  summary: ["short summary", "summary", "краткое резюме", "краткий итог", "краткое саммари", "резюме"],
-  reasons: ["key reasons", "reasons", "ключевые причины", "причины"],
-  gaps: ["open gaps", "gaps", "unknowns", "risks", "пробелы", "риски"],
-  next: ["next steps", "следующие шаги", "дальше"],
+  summary: ["short summary", "summary"],
+  reasons: ["key reasons", "reasons"],
+  gaps: ["open gaps", "gaps", "unknowns", "risks"],
+  next: ["next steps"],
 };
 
 const verdictMatchers = [
-  { level: "high" as const, tokens: ["high", "высок"] },
-  { level: "medium" as const, tokens: ["medium", "средн"] },
-  { level: "low" as const, tokens: ["low", "низк"] },
-  { level: "uncertain" as const, tokens: ["uncertain", "неопредел", "условн", "сомн"] },
+  { level: "high" as const, tokens: ["high"] },
+  { level: "medium" as const, tokens: ["medium"] },
+  { level: "low" as const, tokens: ["low"] },
+  { level: "uncertain" as const, tokens: ["uncertain"] },
 ];
 
 function detectReadinessLevel(text: string): ReadinessLevel {
@@ -109,7 +99,7 @@ function detectReadinessLevel(text: string): ReadinessLevel {
 }
 
 function extractReadinessConfidence(text: string): number | null {
-  const match = text.match(/(?:confidence|уверенность)\s*[:\-–—]?\s*(\d{1,3})\s*%/i);
+  const match = text.match(/(?:confidence)\s*[:\-]?\s*(\d{1,3})\s*%/i);
   if (!match) return null;
   const value = Number.parseInt(match[1], 10);
   if (Number.isNaN(value)) return null;
@@ -134,7 +124,7 @@ function extractReadinessSections(text: string) {
   const lines = text.split("\n");
   const sections = { verdictLine: "", summary: [] as string[], reasons: [] as string[], gaps: [] as string[], next: [] as string[] };
 
-  const verdictMatch = text.match(/\bVerdict\b[^\n]*/i) || text.match(/\bВердикт\b[^\n]*/i);
+  const verdictMatch = text.match(/\bVerdict\b[^\n]*/i);
   if (verdictMatch) {
     sections.verdictLine = verdictMatch[0].replace(/\*/g, "").trim();
   }
@@ -174,7 +164,7 @@ function parseBreakdownFromText(text: string): TenderBreakdownData | null {
   const lines = raw.split("\n").map((line) => line.trim()).filter(Boolean);
   if (lines.length === 0) return null;
   const firstLine = lines[0].toLowerCase();
-  const hasHeader = firstLine.includes("разбор тендера") || firstLine.includes("tender breakdown");
+  const hasHeader = firstLine.includes("tender breakdown");
   const normalizeLine = (line: string) => line.replace(/^[-•–—]\s*/, "");
   const hasNumbered = lines.some((line) => /^\d+[).]/.test(normalizeLine(line)))
     || /^\s*\d+[).]\s/.test(raw);
@@ -182,9 +172,7 @@ function parseBreakdownFromText(text: string): TenderBreakdownData | null {
 
   let title = lines[0];
   if (hasHeader) {
-    title = lines[0]
-      .replace(/^(Разбор тендера|Tender breakdown)\s*[:\-–—]?\s*/i, "")
-      .trim();
+    title = lines[0].replace(/^Tender breakdown\s*[:\-]?\s*/i, "").trim();
   }
 
   const sections: TenderBreakdownSection[] = [];
@@ -349,16 +337,15 @@ export default function Home() {
     const rawPercent = confidenceOverride ?? meta.percent;
     const percent = clampReadinessConfidence(level, rawPercent);
     const toneClass = `tone-${meta.tone}`;
-    const isRussian = /[А-Яа-яЁё]/.test(text);
-    const levelLabel = isRussian ? readinessLabelsRu[level] : meta.label;
+    const levelLabel = meta.label;
     const labels = {
-      kicker: isRussian ? "Готовность компании" : "Company readiness",
-      confidence: isRussian ? "уверенность" : "confidence",
-      reasons: isRussian ? "Ключевые причины" : "Key reasons",
-      gaps: isRussian ? "Пробелы" : "Open gaps",
-      next: isRussian ? "Следующие шаги" : "Next steps",
-      memo: isRussian ? "Подробный анализ" : "Detailed analysis",
-      sources: isRussian ? "Источники" : "Sources",
+      kicker: "Company readiness",
+      confidence: "confidence",
+      reasons: "Key reasons",
+      gaps: "Open gaps",
+      next: "Next steps",
+      memo: "Detailed analysis",
+      sources: "Sources",
     };
 
     return (
@@ -380,7 +367,7 @@ export default function Home() {
         <div className="readiness-sections">
           {sections.summary.length > 0 && (
             <div className="readiness-summary">
-              <p className="readiness-summary-label">{isRussian ? "Коротко" : "Short summary"}</p>
+              <p className="readiness-summary-label">Short summary</p>
               <ul>
                 {sections.summary.map((item, idx) => (
                   <li key={`summary-${idx}`}>{renderInline(item)}</li>
@@ -448,25 +435,21 @@ export default function Home() {
 
   const renderTenderBreakdownCard = (msg: Message, output: ToolOutput) => {
     const data = output.data as TenderBreakdownData | undefined;
-    const text = output.content || msg.content;
-    const isRussian = /[А-Яа-яЁё]/.test(text + JSON.stringify(data || {}));
     const sections = (data?.sections || []).map((section) => ({
       ...section,
       title: stripMarkdown(section.title || ""),
     }));
-    const title = stripMarkdown(
-      data?.title || (isRussian ? "Разбор тендера" : "Tender breakdown")
-    );
+    const title = stripMarkdown(data?.title || "Tender breakdown");
     const labels = {
-      kicker: isRussian ? "Разбор тендера" : "Tender breakdown",
-      memo: isRussian ? "Полный отчет" : "Full memo",
-      sources: isRussian ? "Источники" : "Sources",
-      deliveries: isRussian ? "Релевантные поставки" : "Relevant deliveries",
-      empty: isRussian ? "Нет структурированных секций" : "No structured sections",
-      noDetails: isRussian ? "Нет данных" : "No details found",
+      kicker: "Tender breakdown",
+      memo: "Full memo",
+      sources: "Sources",
+      deliveries: "Relevant deliveries",
+      empty: "No structured sections",
+      noDetails: "No details found",
     };
 
-    const sectionLabel = isRussian ? "секций" : "sections";
+    const sectionLabel = "sections";
 
     if (DEBUG_UI) {
       console.info("tender_breakdown", {
@@ -495,7 +478,7 @@ export default function Home() {
             return (
               <details className="card-section" key={`section-${idx}`}>
                 <summary>
-                  <span>{section.title || (isRussian ? "Раздел" : "Section")}</span>
+                  <span>{section.title || "Section"}</span>
                 </summary>
                 {bulletCount > 0 ? (
                   <ul>
@@ -575,18 +558,16 @@ export default function Home() {
   const renderSimilarCard = (msg: Message, output: ToolOutput) => {
     const data = output.data as SimilarData | undefined;
     const matches = data?.matches || [];
-    const text = output.content || msg.content;
-    const isRussian = /[А-Яа-яЁё]/.test(text + JSON.stringify(data || {}));
     const labels = {
-      kicker: isRussian ? "Похожие тендеры" : "Similar tenders",
-      memo: isRussian ? "Полный отчет" : "Full memo",
-      sources: isRussian ? "Источники" : "Sources",
-      deliveries: isRussian ? "Релевантные поставки" : "Relevant deliveries",
-      empty: isRussian ? "Нет совпадений" : "No matches found",
-      queries: isRussian ? "Запросы" : "Queries",
+      kicker: "Similar tenders",
+      memo: "Full memo",
+      sources: "Sources",
+      deliveries: "Relevant deliveries",
+      empty: "No matches found",
+      queries: "Queries",
     };
 
-    const matchLabel = isRussian ? "совпадений" : "matches";
+    const matchLabel = "matches";
 
     return (
       <div className="info-card similar-card">

@@ -6,7 +6,7 @@ Built for an anonymized industrial client (codename **Aurora Works**) who wanted
 
 ## Demo
 
-[![Demo](media/demo-thumb.svg)](https://drive.google.com/file/d/1AteizbOkRHd12HF4UNxwLfkk7BIcL2Je/view?usp=sharing)
+[![Demo](media/demo-thumb.svg)](https://www.youtube.com/watch?v=E6i5fiUuTtA)
 
 ## What it does
 
@@ -40,7 +40,7 @@ This console turns a tender into a **decision‑ready brief** with explicit evid
 
 ## Quickstart (Docker)
 
-1) Create `agent/src/.env` with your secrets:
+1) Create `agent/.env` with your secrets:
 
 ```bash
 OPENAI_API_TOKEN=...
@@ -63,7 +63,7 @@ docker compose up --build
 
 ## Typical workflow
 
-1) Put tender PDFs into `agent/src/data/tenders/raw/` (optional if you attach via chat)
+1) Put tender PDFs into `agent/data/tenders/raw/` (optional if you attach via chat)
 2) Chunk + embed + upsert to Pinecone (CLI)
 3) Ask questions like:
 

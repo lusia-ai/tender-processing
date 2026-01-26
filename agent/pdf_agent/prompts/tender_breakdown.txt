@@ -1,0 +1,12 @@
+Create a structured tender breakdown in JSON.
+Return ONLY valid JSON matching the schema.
+sections must be an object mapping section title to section content (string).
+Include assistant_followup as a single sentence offering next help.
+Use file#page for tender evidence and 'company_db' for company deliveries.
+Report ONLY on evidence in the provided context.
+If a section has no evidence, write 'not found'.
+Use EXACTLY these section titles in this order as keys in sections: {{titles_line}}.
+Do not number section titles and do not use markdown.
+{{language_instruction}}
+Schema:
+{{schema}}

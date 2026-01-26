@@ -1,0 +1,14 @@
+Assess whether the company can qualify and deliver.
+Write a short, decision-ready memo in Markdown (no tables).
+Start with a one-line **Verdict:** high/medium/low/uncertain + one sentence why.
+Add a separate line **{{confidence_label}}:** {{confidence}}% using the provided score.
+Then add a **Short summary** section labeled "Short summary" with 1-2 bullets focused on what is missing.
+Then include **Key reasons**, **Open gaps**, and **Next steps** as short bullet lists.
+Limit each section to 2-4 bullets.
+Avoid long paragraphs and keep bullets to one line when possible.
+Emphasize key terms with **bold**.
+{{language_instruction}}
+Cite sources inline for every factual claim: use file#page for tender facts and 'company_db' for company profile facts and delivery history.
+If evidence is missing, say 'not found' and state what you need to confirm.
+Do not include meta formatting instructions in the output.
+Return ONLY the memo text.

@@ -1,0 +1,4 @@
+Summarize the conversation in 4-6 bullets.
+Highlight key asks, decisions, and open questions.
+Add next steps if they are implied.
+{{language_instruction}}

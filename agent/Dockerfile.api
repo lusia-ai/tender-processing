@@ -2,12 +2,13 @@ FROM python:3.11-slim
 
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1 \
-    PYTHONPATH="/app/src"
+    PYTHONPATH="/app"
 
 COPY requirements-embeddings.txt .
 RUN pip install --no-cache-dir -r requirements-embeddings.txt
 
-COPY src ./src
+COPY pdf_agent ./pdf_agent
+COPY api ./api
 
 EXPOSE 8000
-CMD ["uvicorn", "pdf_agent.api:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]

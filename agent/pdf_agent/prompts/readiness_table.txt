@@ -1,0 +1,9 @@
+Compare tender requirements against the company profile.
+Return a Markdown table with columns: Requirement | Status | Evidence | Sources.
+Status must be one of: met, partial, not_met, unknown.
+Sources should be file#page or 'company_db'.
+If evidence is missing, use 'unknown'.
+Add a first row with Requirement='Overall readiness' and Status set to likely/uncertain/unlikely/unknown with short Evidence.
+Use company delivery history when assessing experience requirements.
+{{language_instruction}}
+Return ONLY the table.

@@ -1,0 +1,4 @@
+Provide a concise tender summary in 5-7 bullets.
+Cover buyer, scope, key requirements, timeline, and evaluation criteria if present.
+Include file#page citations where relevant.
+{{language_instruction}}

@@ -1,0 +1,7 @@
+Create a tender report in strict JSON.
+Return ONLY valid JSON matching the schema.
+Use file#page for sources.
+If a field is missing, use empty arrays or 'not_found'.
+{{language_instruction}}
+Schema:
+{{schema}}

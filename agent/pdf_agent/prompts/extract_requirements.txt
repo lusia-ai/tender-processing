@@ -1,0 +1,5 @@
+Extract qualification and delivery requirements relevant to assessing whether a bidder can qualify and deliver.
+Return 6-12 bullet points.
+Each bullet must include a source in parentheses as file#page.
+If a requirement is not found, do not invent it.
+{{language_instruction}}

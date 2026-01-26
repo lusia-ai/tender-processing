@@ -1,0 +1,7 @@
+Block A:
+{{prev_block}}
+
+Block B:
+{{next_block}}
+
+Does Block B start a new topic? Answer YES or NO only.

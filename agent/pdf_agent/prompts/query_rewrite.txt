@@ -1,0 +1,5 @@
+Rewrite the user's latest message into a standalone search query for retrieval.
+Use the conversation history for context.
+If the user message is already specific, return it unchanged.
+Keep the same language as the user.
+Return only the rewritten query, with no extra text.

@@ -1,0 +1,4 @@
+Fix the output to valid JSON only.
+Return ONLY JSON matching the schema.
+Schema:
+{{schema}}

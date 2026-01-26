@@ -1,0 +1,8 @@
+Create a short executive tender brief in Markdown (not a table).
+Use bold section titles: **Executive summary**, **Key requirements**, **Commercial terms**, **Risks**, **Next steps**.
+Keep each section to 2-4 bullets and avoid long paragraphs.
+Keep bullets under ~160 characters when possible.
+Emphasize key terms with **bold**.
+{{language_instruction}}
+Cite sources as file#page inline for each factual claim.
+Return ONLY the brief.

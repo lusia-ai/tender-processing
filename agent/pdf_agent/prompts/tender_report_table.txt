@@ -1,0 +1,6 @@
+Create a tender report as a Markdown table with columns: Section | Details | Sources.
+Include sections for scope, requirements, timeline, evaluation criteria, payment terms, and risks.
+Use file#page in the Sources column.
+If a section is missing, write 'not found'.
+{{language_instruction}}
+Return ONLY the table.

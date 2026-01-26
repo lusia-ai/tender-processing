@@ -1,0 +1,8 @@
+Compare tender requirements against the company profile.
+Return ONLY valid JSON matching the schema.
+Use file#page for tender sources and 'company_db' for company evidence.
+If evidence is missing, mark status as unknown and add a gap.
+Do not invent company data.
+{{language_instruction}}
+Schema:
+{{schema}}
